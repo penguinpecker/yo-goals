@@ -20,16 +20,16 @@ import BottomNav from '@/components/BottomNav';
 // Demo data — replace with live vault data
 const DEMO_GOALS = [
   { id: '1', name: 'Japan Trip', ill: 'travel' as const, target: 3000, current: 1847,
-    allocs: [{ vault: 'yoUSD' as const, weight: 7000, apy: 18.4 }, { vault: 'yoETH' as const, weight: 2000, apy: 13.2 }],
+    allocs: [{ vault: 'yoETH' as const, weight: 7000, apy: 18.4 }, { vault: 'yoETH' as const, weight: 2000, apy: 13.2 }],
     bApy: 16.8, risk: 1, color: COLORS.orange, days: 365, dep: 1700, yld: 147 },
   { id: '2', name: 'Emergency Fund', ill: 'emergency' as const, target: 10000, current: 6230,
-    allocs: [{ vault: 'yoUSD' as const, weight: 9000, apy: 18.4 }],
+    allocs: [{ vault: 'yoETH' as const, weight: 9000, apy: 18.4 }],
     bApy: 17.7, risk: 0, color: COLORS.lavender, days: 295, dep: 5800, yld: 430 },
   { id: '3', name: 'New MacBook', ill: 'tech' as const, target: 2500, current: 2380,
-    allocs: [{ vault: 'yoUSD' as const, weight: 10000, apy: 18.4 }],
+    allocs: [{ vault: 'yoETH' as const, weight: 10000, apy: 18.4 }],
     bApy: 18.4, risk: 0, color: COLORS.success, days: 82, dep: 2200, yld: 180 },
   { id: '4', name: 'ETH Stack', ill: 'crypto' as const, target: 13000, current: 5460,
-    allocs: [{ vault: 'yoETH' as const, weight: 6000, apy: 13.2 }, { vault: 'yoUSD' as const, weight: 4000, apy: 18.4 }],
+    allocs: [{ vault: 'yoETH' as const, weight: 6000, apy: 13.2 }, { vault: 'yoETH' as const, weight: 4000, apy: 18.4 }],
     bApy: 15.3, risk: 2, color: COLORS.info, days: 447, dep: 4800, yld: 660 },
 ];
 
@@ -428,7 +428,7 @@ function Dashboard() {
         <div style={{ fontSize: 11, color: '#888' }}>AI builds your strategy automatically</div>
       </Card>
 
-      <Card variant="dark" onClick={() => setShowAdv(true)} style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '3px 3px 0 #7570D1' }}>
+      <Card variant="dark" onClick={() => router.push('/advisor')} style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '3px 3px 0 #7570D1' }}>
         <div style={{ width: 44, height: 44, background: COLORS.lavender, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Brain size={22} color={COLORS.white} /></div>
         <div style={{ flex: 1 }}><div style={{ fontWeight: 800, fontSize: 14, color: COLORS.white }}>AI SAVINGS ADVISOR</div><div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>Free for you · Powered by x402 under the hood</div></div>
         <Sparkles size={16} color="#CCFF00" />
@@ -447,7 +447,6 @@ function Dashboard() {
 
     {showDep && <DepositModal goal={selGoal} onClose={() => setShowDep(false)} />}
     {showWith && <WithdrawModal goal={selGoal} onClose={() => setShowWith(false)} />}
-    {showAdv && <AdvisorModal onClose={() => setShowAdv(false)} />}
     {showCreate && <CreateGoalModal onClose={() => setShowCreate(false)} />}
     <BottomNav />
   </>);

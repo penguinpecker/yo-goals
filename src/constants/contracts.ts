@@ -51,3 +51,9 @@ export const YO_GATEWAY = '0xF1EeE0957267b1A474323Ff9CfF7719E964969FA' as `0x${s
 export const YO_GOALS_CONTRACT = (process.env.NEXT_PUBLIC_YOGOALS_CONTRACT || '') as `0x${string}`;
 export const FEE_BPS = 1000;
 export const BPS_DENOMINATOR = 10000;
+
+export const STRATEGY_PRESETS: Record<number, { vault: string; weight: number }[]> = {
+  0: [{ vault: 'yoETH', weight: 10000 }],
+  1: [{ vault: 'yoETH', weight: 5000 }, { vault: 'yoGOLD', weight: 3000 }, { vault: 'yoBTC', weight: 2000 }],
+  2: [{ vault: 'yoETH', weight: 4000 }, { vault: 'yoBTC', weight: 3500 }, { vault: 'yoGOLD', weight: 2500 }],
+};

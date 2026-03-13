@@ -1,7 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
     version: "0.8.24",
@@ -20,11 +19,6 @@ module.exports = {
     },
   },
   etherscan: {
-    apiKey: { base: process.env.BASESCAN_API_KEY || "" },
-    customChains: [{
-      network: "base",
-      chainId: 8453,
-      urls: { apiURL: "https://api.basescan.org/api", browserURL: "https://basescan.org" },
-    }],
+    apiKey: "WVTMY9EBZV1NPN3WNY3J26TUCF1AKGED4B",
   },
 };

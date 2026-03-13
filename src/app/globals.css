@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Metio-style card hover */
+.goal-card {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.goal-card:hover {
+  box-shadow: 3px 3px 0px #080808;
+  transform: translate(-2px, -2px);
+}
+
+/* Modal animations */
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-enter {
+  animation: slideUp 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+.backdrop-enter {
+  animation: fadeIn 0.2s ease;
+}
+
+/* Scrollbar hide for mobile feel */
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

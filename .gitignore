@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+build/
+.env
+.env.local
+*.log
+cache/
+artifacts/
+typechain-types/
+coverage/
+.vercel
+.DS_Store

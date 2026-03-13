@@ -13,7 +13,7 @@ export function VaultBadge({ vault, size = 26 }: { vault: string; size?: number 
   return (<div style={{ width: size, height: size, borderRadius: size * 0.25, background: config.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: size * 0.32, color: COLORS.black, letterSpacing: -0.5, border: `1.5px solid ${COLORS.black}`, flexShrink: 0 }}>{letter}</div>);
 }
 
-export function SectionLabel({ icon: Icon, children }: { icon?: any; children: ReactNode }) {
+export function SectionLabel({ icon: Icon, children }: { icon?: React.ElementType; children: ReactNode }) {
   return (<div style={{ fontSize: 10, fontWeight: 600, color: '#888', textTransform: 'uppercase', letterSpacing: 1.2, marginBottom: 10, marginTop: 20, display: 'flex', alignItems: 'center', gap: 6 }}>{Icon && <Icon size={12} strokeWidth={2.5} />}{children}</div>);
 }
 

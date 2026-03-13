@@ -30,8 +30,6 @@ export function Providers({ children }: { children: ReactNode }) {
           createOnLogin: 'users-without-wallets',
         },
         // External wallet list
-        externalWallets: {
-          metamask: { connectionOptions: { shouldAutoConnect: true } },
         },
       }}
     >

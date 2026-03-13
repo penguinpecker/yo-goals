@@ -396,7 +396,7 @@ function Dashboard() {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {DEMO_GOALS.map(g => {
           const pct = (g.current / g.target) * 100;
-          const txtC = [COLORS.success, COLORS.info].includes(g.color) ? COLORS.white : COLORS.black;
+          const txtC = ([COLORS.success, COLORS.info] as string[]).includes(g.color) ? COLORS.white : COLORS.black;
           return (
             <div key={g.id} onClick={() => router.push(`/goal/${g.id}`)}
               style={{ background: COLORS.white, border: `2px solid ${COLORS.black}`, borderRadius: 16, padding: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 14, transition: 'all 0.2s' }}>

@@ -29,8 +29,6 @@ export function Providers({ children }: { children: ReactNode }) {
         embeddedWallets: {
           createOnLogin: 'users-without-wallets',
         },
-        // External wallet list
-        },
       }}
     >
       <QueryClientProvider client={queryClient}>

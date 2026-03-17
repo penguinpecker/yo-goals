@@ -149,7 +149,7 @@ function CreateGoalModal({ onClose }: { onClose: () => void }) {
           <div style={{ fontSize: 10, fontWeight: 600, color: '#888', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Goal Name</div>
           <input value={goalName} onChange={e => setGoalName(e.target.value)} placeholder="e.g. Japan Trip 2027" style={{ width: '100%', padding: '14px 16px', border: `2px solid ${COLORS.black}`, borderRadius: 12, fontSize: 15, fontWeight: 600, marginBottom: 16, fontFamily: 'inherit', boxSizing: 'border-box' }} />
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: '#888', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Target Amount (ETH)</div>
+          <div style={{ fontSize: 10, fontWeight: 600, color: '#888', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Savings Goal (ETH)</div>
           <input value={targetAmt} onChange={e => setTargetAmt(e.target.value)} placeholder="0.0" type="number" step="0.001" style={{ width: '100%', padding: '14px 16px', border: `2px solid ${COLORS.black}`, borderRadius: 12, fontSize: 15, fontWeight: 600, marginBottom: 16, fontFamily: 'inherit', boxSizing: 'border-box' }} />
 
           <div style={{ fontSize: 10, fontWeight: 600, color: '#888', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 8 }}>Deadline</div>
@@ -192,7 +192,7 @@ function CreateGoalModal({ onClose }: { onClose: () => void }) {
 
           <div style={{ background: COLORS.lightGray, borderRadius: 12, padding: '10px 14px', marginBottom: 20, fontSize: 11, color: '#666', lineHeight: 1.5, display: 'flex', alignItems: 'center', gap: 8 }}>
             <Sparkles size={14} color={COLORS.lavender} style={{ flexShrink: 0 }} />
-            Creates goal on-chain. You can deposit funds after creation.
+            This is your savings target. After creating, you'll deposit any amount you want (even 0.001 ETH) toward this goal.
           </div>
 
           <button onClick={handleCreate} disabled={!goalName || !targetAmt || !deadline || !isConnected} style={{

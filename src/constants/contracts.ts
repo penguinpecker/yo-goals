@@ -1,59 +1,54 @@
-export const CHAIN_ID = 8453;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  DreamTeam — Contract Config (Arbitrum One)
+//  Deployed: March 2, 2026
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-export const YO_VAULTS: Record<string, {
-  address: `0x${string}`; asset: string; assetAddress: `0x${string}`;
-  decimals: number; color: string; apy: number; tvl: string; risk: string; desc: string;
-  pools: { name: string; chain: string; pct: number; risk: string }[];
-  chart: number[];
-}> = {
-  yoETH: {
-    address: '0x3a43aec53490cb9fa922847385d82fe25d0e9de7',
-    asset: 'WETH', assetAddress: '0x4200000000000000000000000000000000000006',
-    decimals: 18, color: '#938EF2', apy: 13.2, tvl: '$14M', risk: 'B',
-    desc: 'ETH yield optimizer',
-    pools: [
-      { name: 'Lido stETH', chain: 'Ethereum', pct: 40, risk: 'Low' },
-      { name: 'Pendle PT-weETH', chain: 'Arbitrum', pct: 30, risk: 'Moderate' },
-      { name: 'Morpho ETH/USDC', chain: 'Base', pct: 20, risk: 'Low' },
-      { name: 'Idle (Reserve)', chain: 'Base', pct: 10, risk: 'Idle' },
-    ],
-    chart: [55,60,58,65,62,70,68,72,75,70,78,76],
-  },
-  yoBTC: {
-    address: '0xbCbc8cb4D1e8ED048a6276a5E94A3e952660BcbC',
-    asset: 'cbBTC', assetAddress: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
-    decimals: 8, color: '#F59E0B', apy: 1.4, tvl: '$9M', risk: 'B',
-    desc: 'Bitcoin yield optimizer',
-    pools: [
-      { name: 'Morpho cbBTC/USDC', chain: 'Base', pct: 50, risk: 'Low' },
-      { name: 'Balancer Stable', chain: 'Base', pct: 35, risk: 'Low' },
-      { name: 'Idle (Reserve)', chain: 'Base', pct: 15, risk: 'Idle' },
-    ],
-    chart: [40,42,38,45,43,48,44,46,50,47,52,48],
-  },
-  yoGOLD: {
-    address: '0x0000000000000000000000000000000000000000',
-    asset: 'XAUT', assetAddress: '0x0000000000000000000000000000000000000000',
-    decimals: 6, color: '#6C9700', apy: 11.1, tvl: '$4M', risk: 'B',
-    desc: 'Gold-backed yield',
-    pools: [
-      { name: 'Morpho XAUT Pool', chain: 'Ethereum', pct: 55, risk: 'Low' },
-      { name: 'Reserve Pool', chain: 'Ethereum', pct: 30, risk: 'Low' },
-      { name: 'Idle (Reserve)', chain: 'Ethereum', pct: 15, risk: 'Idle' },
-    ],
-    chart: [45,48,50,52,48,55,53,58,56,60,58,55],
-  },
-};
+export const CHAIN_ID = 42161;
 
-export type VaultId = keyof typeof YO_VAULTS;
-export const VAULT_IDS = Object.keys(YO_VAULTS);
-export const YO_GATEWAY = '0xF1EeE0957267b1A474323Ff9CfF7719E964969FA' as `0x${string}`;
-export const YO_GOALS_CONTRACT = (process.env.NEXT_PUBLIC_YOGOALS_CONTRACT || '') as `0x${string}`;
-export const FEE_BPS = 1000;
-export const BPS_DENOMINATOR = 10000;
+export const ADDRESSES = {
+  SCORING_REGISTRY: '0x03D0ef8D6F2F743e1A88AF0D28114a00d31a3EC9' as `0x${string}`,
+  CONTEST_FACTORY: '0x65950BdD72e2D0feaf884bE3B735364EE10946D9' as `0x${string}`,
+  CONTEST_IMPLEMENTATION: '0xe0bF1B83BB6f7B2282F84e21882f7EfF001d8E49' as `0x${string}`,
+  USDC: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831' as `0x${string}`,
+} as const;
 
-export const STRATEGY_PRESETS: Record<number, { vault: string; weight: number }[]> = {
-  0: [{ vault: 'yoETH', weight: 10000 }],
-  1: [{ vault: 'yoETH', weight: 5000 }, { vault: 'yoGOLD', weight: 3000 }, { vault: 'yoBTC', weight: 2000 }],
-  2: [{ vault: 'yoETH', weight: 4000 }, { vault: 'yoBTC', weight: 3500 }, { vault: 'yoGOLD', weight: 2500 }],
-};
+export const USDC_ABI = [
+  { name: 'approve', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }], outputs: [{ type: 'bool' }] },
+  { name: 'allowance', type: 'function', stateMutability: 'view', inputs: [{ name: 'owner', type: 'address' }, { name: 'spender', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  { name: 'balanceOf', type: 'function', stateMutability: 'view', inputs: [{ name: 'account', type: 'address' }], outputs: [{ type: 'uint256' }] },
+  { name: 'decimals', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint8' }] },
+] as const;
+
+export const CONTEST_ABI = [
+  { name: 'matchId', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'entryFee', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'maxParticipants', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint32' }] },
+  { name: 'participantCount', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint32' }] },
+  { name: 'commitDeadline', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'revealDeadline', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'state', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint8' }] },
+  { name: 'prizePool', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'commitments', type: 'function', stateMutability: 'view', inputs: [{ name: 'user', type: 'address' }], outputs: [{ type: 'bytes32' }] },
+  { name: 'results', type: 'function', stateMutability: 'view', inputs: [{ name: 'user', type: 'address' }], outputs: [{ name: 'totalPoints', type: 'int256' }, { name: 'rank', type: 'uint32' }, { name: 'reward', type: 'uint256' }, { name: 'claimed', type: 'bool' }] },
+  { name: 'commitLineup', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'commitment', type: 'bytes32' }], outputs: [] },
+  { name: 'revealLineup', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'playerIds', type: 'uint256[11]' }, { name: 'captainIndex', type: 'uint8' }, { name: 'viceCaptainIndex', type: 'uint8' }, { name: 'salt', type: 'bytes32' }], outputs: [] },
+  { name: 'claimReward', type: 'function', stateMutability: 'nonpayable', inputs: [], outputs: [] },
+  { name: 'claimRefund', type: 'function', stateMutability: 'nonpayable', inputs: [], outputs: [] },
+  { name: 'emergencyWithdraw', type: 'function', stateMutability: 'nonpayable', inputs: [], outputs: [] },
+] as const;
+
+export const CONTEST_FACTORY_ABI = [
+  { name: 'isContest', type: 'function', stateMutability: 'view', inputs: [{ name: 'addr', type: 'address' }], outputs: [{ type: 'bool' }] },
+  { name: 'protocolFeeBps', type: 'function', stateMutability: 'view', inputs: [], outputs: [{ type: 'uint256' }] },
+  { name: 'createContest', type: 'function', stateMutability: 'nonpayable', inputs: [{ name: 'matchId', type: 'uint256' }, { name: 'entryFee', type: 'uint256' }, { name: 'maxParticipants', type: 'uint32' }, { name: 'commitDeadline', type: 'uint256' }, { name: 'revealDeadline', type: 'uint256' }, { name: 'prizeRankStart', type: 'uint32[]' }, { name: 'prizeRankEnd', type: 'uint32[]' }, { name: 'prizeBps', type: 'uint256[]' }], outputs: [{ type: 'address' }] },
+] as const;
+
+export const SCORING_REGISTRY_ABI = [
+  { name: 'getScores', type: 'function', stateMutability: 'view', inputs: [{ name: 'matchId', type: 'uint256' }, { name: 'playerIds', type: 'uint256[]' }], outputs: [{ type: 'int32[]' }] },
+  { name: 'matchFinalized', type: 'function', stateMutability: 'view', inputs: [{ name: 'matchId', type: 'uint256' }], outputs: [{ type: 'bool' }] },
+] as const;
+
+export enum ContestState { OPEN = 0, COMMIT_CLOSED = 1, REVEAL_CLOSED = 2, SETTLED = 3, CANCELLED = 4 }
+
+export const STATE_LABELS: Record<number, string> = { 0: 'Open', 1: 'Lineups Locked', 2: 'In Progress', 3: 'Settled', 4: 'Cancelled' };
+export const STATE_COLORS: Record<number, string> = { 0: '#00FF87', 1: '#FBBF24', 2: '#3B82F6', 3: '#8B5CF6', 4: '#EF4444' };

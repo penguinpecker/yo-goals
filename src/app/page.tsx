@@ -44,8 +44,8 @@ const GOAL_TYPES = ['travel', 'emergency', 'tech', 'crypto'] as const;
 
 const STRATEGY_PRESETS: Record<number, { vault: string; weight: number }[]> = {
   0: [{ vault: 'yoETH', weight: 10000 }],
-  1: [{ vault: 'yoETH', weight: 5000 }, { vault: 'yoGOLD', weight: 3000 }, { vault: 'yoBTC', weight: 2000 }],
-  2: [{ vault: 'yoETH', weight: 4000 }, { vault: 'yoBTC', weight: 3500 }, { vault: 'yoGOLD', weight: 2500 }],
+  1: [{ vault: 'yoETH', weight: 7000 }, { vault: 'yoBTC', weight: 3000 }],
+  2: [{ vault: 'yoETH', weight: 5000 }, { vault: 'yoBTC', weight: 5000 }],
 };
 
 // ─── CREATE GOAL MODAL (WIRED TO CONTRACT) ─────────────────

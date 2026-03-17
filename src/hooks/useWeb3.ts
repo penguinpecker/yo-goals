@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { useAccount, useWriteContract, usePublicClient } from 'wagmi';
+import { useAccount, useWriteContract, usePublicClient, useSendTransaction } from 'wagmi';
 import { parseUnits, encodeFunctionData } from 'viem';
 import { usePrivy } from '@privy-io/react-auth';
 import { YO_VAULTS, YO_GOALS_CONTRACT } from '@/constants/contracts';
@@ -9,12 +9,18 @@ import { YOGOALS_ABI, ERC20_ABI } from '@/lib/abi';
 
 const CONTRACT = YO_GOALS_CONTRACT;
 
+// Base WETH has a deposit() payable function to wrap ETH
+const WETH_ABI = [
+  { name: 'deposit', type: 'function', stateMutability: 'payable', inputs: [], outputs: [] },
+] as const;
+
 export function useWeb3() {
   const { user } = usePrivy();
   const { address } = useAccount();
   const { writeContractAsync } = useWriteContract();
+  const { sendTransactionAsync } = useSendTransaction();
   const publicClient = usePublicClient();
-  const [txStatus, setTxStatus] = useState<'idle' | 'approving' | 'depositing' | 'withdrawing' | 'creating' | 'success' | 'error'>('idle');
+  const [txStatus, setTxStatus] = useState<'idle' | 'wrapping' | 'approving' | 'depositing' | 'withdrawing' | 'creating' | 'success' | 'error'>('idle');
   const [txHash, setTxHash] = useState<string | null>(null);
   const [txError, setTxError] = useState<string | null>(null);
 
@@ -72,7 +78,6 @@ export function useWeb3() {
       if (publicClient) await publicClient.waitForTransactionReceipt({ hash });
       setTxStatus('success');
 
-      // Log to supabase
       try {
         await fetch('/api/transactions', {
           method: 'POST',
@@ -103,7 +108,18 @@ export function useWeb3() {
     const amountBigInt = parseUnits(params.amount, vault.decimals);
 
     try {
-      // Step 1: Approve
+      // Step 1: Wrap ETH → WETH (only for WETH vaults)
+      if (vault.asset === 'WETH') {
+        setTxStatus('wrapping');
+        const wrapHash = await sendTransactionAsync({
+          to: vault.assetAddress as `0x${string}`,
+          value: amountBigInt,
+          data: encodeFunctionData({ abi: WETH_ABI, functionName: 'deposit' }),
+        });
+        if (publicClient) await publicClient.waitForTransactionReceipt({ hash: wrapHash });
+      }
+
+      // Step 2: Approve exact amount
       setTxStatus('approving');
       const approveHash = await writeContractAsync({
         address: vault.assetAddress as `0x${string}`,
@@ -113,7 +129,7 @@ export function useWeb3() {
       });
       if (publicClient) await publicClient.waitForTransactionReceipt({ hash: approveHash });
 
-      // Step 2: Deposit
+      // Step 3: Deposit into goal
       setTxStatus('depositing');
       const depositHash = await writeContractAsync({
         address: CONTRACT,
@@ -125,7 +141,6 @@ export function useWeb3() {
       if (publicClient) await publicClient.waitForTransactionReceipt({ hash: depositHash });
       setTxStatus('success');
 
-      // Log to supabase
       try {
         await fetch('/api/transactions', {
           method: 'POST',
@@ -140,7 +155,7 @@ export function useWeb3() {
       setTxStatus('error');
       throw e;
     }
-  }, [address, privyId, writeContractAsync, publicClient]);
+  }, [address, privyId, writeContractAsync, sendTransactionAsync, publicClient]);
 
   const withdraw = useCallback(async (params: {
     onchainGoalId: number;

@@ -26,7 +26,7 @@ function DepositModal({ goal: g, onClose }: { goal: any; onClose: () => void }) 
 
   const primaryVault = g.allocs[0]?.vault || 'yoETH';
   const vaultInfo = YO_VAULTS[primaryVault];
-  const isLoading = txStatus === 'approving' || txStatus === 'depositing';
+  const isLoading = txStatus === 'wrapping' || txStatus === 'approving' || txStatus === 'depositing';
   const isDone = txStatus === 'success';
   const isError = txStatus === 'error';
 
@@ -86,7 +86,7 @@ function DepositModal({ goal: g, onClose }: { goal: any; onClose: () => void }) 
             <div style={{ width: 56, height: 56, border: '3px solid #333', borderTopColor: COLORS.orange, borderRadius: '50%', margin: '0 auto 16px', animation: 'spin 0.8s linear infinite' }} />
             <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
             <div style={{ fontWeight: 700, fontSize: 14, color: '#FFF', marginBottom: 4 }}>
-              {txStatus === 'approving' ? 'Approving token spend...' : 'Depositing into vaults...'}
+              {txStatus === 'wrapping' ? 'Wrapping ETH to WETH...' : txStatus === 'approving' ? 'Approving token spend...' : 'Depositing into vaults...'}
             </div>
             <div style={{ fontSize: 11, color: '#888' }}>Confirm in your wallet</div>
           </div>
